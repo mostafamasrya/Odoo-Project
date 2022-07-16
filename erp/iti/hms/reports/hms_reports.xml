@@ -1,0 +1,119 @@
+<odoo>
+    <data>
+        <record id="hms_patient_report" model="ir.actions.report">
+            <field name="name">print patient</field>
+            <field name="model">hms.patient</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">hms.hms_patient_report_template</field>
+            <field name="report_file">hms.hms_patient_report_template</field>
+            <field name="binding_model_id" ref="model_hms_patient"/>
+            <field name="binding_type">report</field>
+
+        </record>
+        <template id="hms_patient_report_template">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="web.internal_layout">
+                        <div class="page">
+
+                            <div class="row my-3 alert alert-danger">
+                                <h1 class="col-6">Patient Status Report</h1>
+
+                            </div>
+
+                            <div class="row my-4">
+                                <div class="col-6">
+                                                                    <div class=" row">
+                                    <h5 class="col-6">NAME : </h5>
+                                    <p class="col-6"><span t-field="o.firstname"/></p>
+
+                                </div>
+                                <div class=" row">
+                                    <h5 class="col-6">AGE : </h5>
+                                    <p class="col-6"><span t-field="o.age"/></p>
+
+                                </div>
+                                <div class=" row">
+                                    <h5 class="col-6">Department : </h5>
+                                    <p class="col-6"><span t-field="o.departmentNo"/></p>
+
+                                </div>
+                                <div class=" row">
+                                    <h5 class="col-6">Doctors : </h5>
+                                    <div class="col-6">
+                                        <t t-foreach="o.doctor" t-as="doc" >
+                                            <span t-esc="doc.firstname"></span>
+                                            <span>,</span>
+
+                                        </t>
+                                    </div>
+
+                                </div>
+
+
+
+                                </div>
+
+                                <div class="col-6">
+                                    <div class=" row">
+                                        <h5 class="col-6">  <b>birthdate</b> : </h5>
+                                        <p class="col-6"><span t-field="o.b_date"/></p>
+
+                                    </div>
+                                     <div class=" row">
+                                            <h5 class="col-6">PCR : </h5>
+                                            <p class="col-6"><span t-field="o.pcr"/></p>
+
+                                     </div>
+                                        <div class=" row">
+                                             <h5 class="col-6">BloodType : </h5>
+                                                    <p class="col-6"><span t-field="o.BloodType"/></p>
+
+                                         </div>
+                                          <div class=" row">
+                                                 <h5 class="col-6">email : </h5>
+                                              <p class="col-6"><span t-field="o.email"/></p>
+
+
+                                          </div>
+
+
+                                </div>
+
+
+
+                            </div>
+
+                            <div class="row my-4">
+                                <h3 class="alert alert-danger">Log History</h3>
+
+
+                            </div>
+                            <table class="table">
+                                <tr>
+                                    <th>User</th>
+                                    <th>Date</th>
+                                    <th>Info</th>
+                                </tr>
+                                <t t-foreach="o.log_ids" t-as="logg">
+                                   <tr>
+                                        <td t-esc="logg.create_uid"></td>
+                                        <td t-esc="logg.create_date"></td>
+                                        <td t-esc="logg.description"></td>
+                                    </tr>
+
+
+                                </t>
+
+
+
+                            </table>
+
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+
+    </data>
+</odoo>
